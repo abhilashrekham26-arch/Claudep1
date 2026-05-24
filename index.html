@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhi Rekham | Salesforce Administrator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #0176d3;
+      --blue-dk: #014486;
+      --blue-lt: #e8f4fd;
+      --slate:   #1b2533;
+      --mid:     #444f5b;
+      --light:   #f4f6f9;
+      --white:   #ffffff;
+      --accent:  #00a1e0;
+      --gold:    #f4b942;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--slate);
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--slate);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+    }
+    .nav-logo { color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: .5px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a {
+      color: #c9d4e0; text-decoration: none; font-size: .875rem;
+      font-weight: 500; letter-spacing: .3px; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--slate) 0%, var(--blue-dk) 60%, var(--blue) 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 80px 1.5rem 4rem;
+    }
+    .hero-inner { max-width: 720px; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      color: var(--accent);
+      border: 1px solid rgba(0,161,224,.4);
+      border-radius: 20px;
+      padding: .35rem 1rem;
+      font-size: .8rem; font-weight: 600; letter-spacing: .8px;
+      text-transform: uppercase; margin-bottom: 1.4rem;
+    }
+    #hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      color: var(--white); font-weight: 800; line-height: 1.15;
+      margin-bottom: .6rem;
+    }
+    #hero h1 span { color: var(--accent); }
+    .hero-title {
+      color: #a8c4e0; font-size: 1.15rem; font-weight: 500;
+      margin-bottom: 1.4rem;
+    }
+    .hero-summary {
+      color: #c5d8ea; font-size: .975rem; max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: .7rem 1.8rem; border-radius: 6px; font-size: .9rem;
+      font-weight: 600; text-decoration: none; transition: transform .15s, box-shadow .15s;
+      display: inline-block;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-outline { border: 2px solid rgba(255,255,255,.5); color: var(--white); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.15);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--gold); }
+    .stat-lbl { font-size: .75rem; color: #a8c4e0; text-transform: uppercase; letter-spacing: .6px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-size: .75rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--blue); margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.1rem); font-weight: 800;
+      color: var(--slate); margin-bottom: 2.8rem;
+    }
+    .section-title span { color: var(--blue); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--light); }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+    .skill-card {
+      background: var(--white); border-radius: 10px;
+      padding: 1.5rem 1.6rem;
+      border-left: 4px solid var(--blue);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .skill-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+    .skill-card-icon { font-size: 1.5rem; margin-bottom: .6rem; }
+    .skill-card h3 { font-size: .9rem; font-weight: 700; color: var(--blue-dk); margin-bottom: .5rem; }
+    .skill-card p { font-size: .85rem; color: var(--mid); }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+      width: 2px; background: var(--blue-lt);
+    }
+    .timeline-item { position: relative; padding-left: 56px; margin-bottom: 2.6rem; }
+    .timeline-dot {
+      position: absolute; left: 8px; top: 4px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--blue); border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--blue);
+    }
+    .timeline-card {
+      background: var(--white); border-radius: 10px;
+      padding: 1.6rem 1.8rem;
+      box-shadow: 0 2px 14px rgba(0,0,0,.07);
+      border-top: 3px solid var(--blue);
+    }
+    .job-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .4rem; margin-bottom: .8rem; }
+    .job-title { font-size: 1.05rem; font-weight: 700; color: var(--slate); }
+    .job-company { font-size: .9rem; font-weight: 600; color: var(--blue); }
+    .job-date {
+      background: var(--blue-lt); color: var(--blue-dk);
+      font-size: .75rem; font-weight: 600; padding: .25rem .75rem;
+      border-radius: 20px; white-space: nowrap; align-self: flex-start;
+    }
+    .job-location { font-size: .8rem; color: #888; margin-bottom: .9rem; }
+    .job-bullets { list-style: none; }
+    .job-bullets li {
+      font-size: .875rem; color: var(--mid); padding: .3rem 0 .3rem 1.2rem;
+      position: relative; border-bottom: 1px solid #f0f2f5;
+    }
+    .job-bullets li:last-child { border-bottom: none; }
+    .job-bullets li::before {
+      content: '▸'; position: absolute; left: 0; color: var(--blue); font-size: .75rem;
+    }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--light); }
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; }
+    .edu-card {
+      background: var(--white); border-radius: 10px; padding: 1.6rem 1.8rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .edu-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--blue-lt); display: flex; align-items: center;
+      justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .edu-deg { font-size: .95rem; font-weight: 700; color: var(--slate); margin-bottom: .25rem; }
+    .edu-school { font-size: .85rem; color: var(--blue); font-weight: 600; }
+    .edu-loc { font-size: .8rem; color: #888; }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
+    }
+    .cert-chip {
+      background: var(--white); border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      border-left: 4px solid var(--gold);
+      display: flex; gap: .7rem; align-items: flex-start;
+      transition: transform .2s;
+    }
+    .cert-chip:hover { transform: translateY(-2px); }
+    .cert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+    .cert-name { font-size: .85rem; font-weight: 600; color: var(--slate); }
+
+    /* ── TRAILHEAD CALLOUT ── */
+    .trailhead-bar {
+      margin-top: 2rem;
+      background: linear-gradient(90deg, var(--blue-dk), var(--blue));
+      border-radius: 10px; padding: 1.4rem 2rem;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .trailhead-bar .th-icon { font-size: 2rem; }
+    .trailhead-bar p { color: var(--white); font-size: .95rem; }
+    .trailhead-bar strong { color: var(--gold); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--slate); text-align: center; }
+    #contact .section-label { color: var(--accent); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-title span { color: var(--accent); }
+    .contact-cards {
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .contact-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; padding: 1.2rem 1.8rem; color: var(--white);
+      text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: background .2s, transform .15s;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .contact-card:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
+    .contact-card .cc-icon { font-size: 1.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0f1823; text-align: center;
+      padding: 1.4rem; color: #5a6a7a; font-size: .8rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: .78rem; }
+      .timeline::before { left: 14px; }
+      .timeline-dot { left: 4px; }
+      .timeline-item { padding-left: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Abhi <span>Rekham</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">&#9679; Open to Opportunities</div>
+    <h1>Abhi <span>Rekham</span></h1>
+    <p class="hero-title">Salesforce Administrator &middot; Marketing Cloud Account Engagement Specialist</p>
+    <p class="hero-summary">
+      4+ years turning Salesforce into a growth engine &mdash; from Pardot automation and journey design
+      to CRM hygiene, integrations, and analytics-driven campaign strategy.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">4+</div><div class="stat-lbl">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Salesforce Certs</div></div>
+      <div class="stat"><div class="stat-num">228</div><div class="stat-lbl">Trailhead Badges</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Super Badges</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">Who I Am</div>
+    <h2 class="section-title">Professional <span>Summary</span></h2>
+    <p style="font-size:1rem; color:var(--mid); max-width:780px; line-height:1.8;">
+      I'm a Salesforce Administrator specializing in <strong>Marketing Cloud Account Engagement (Pardot)</strong>,
+      with a strong track record at Truist Bank and Accenture. I bridge the gap between marketing, sales,
+      and RevOps &mdash; building structured automation, clean data pipelines, and insight-driven campaigns
+      that move the revenue needle. From Engagement Studio logic and landing page optimization to
+      cross-platform integrations with ZoomInfo, Gong, and Clari, I bring both technical depth and
+      stakeholder-facing communication skills to every engagement.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">What I Do</div>
+    <h2 class="section-title">Core Technical <span>Expertise</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9729;</div>
+        <h3>Salesforce Platforms</h3>
+        <p>Marketing Cloud Account Engagement (Pardot), Sales Cloud, Service Cloud</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9881;</div>
+        <h3>Automation &amp; Marketing Ops</h3>
+        <p>Engagement Studio, Lead Routing, Segmentation Rules, Completion Actions, Dynamic Lists</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#9993;</div>
+        <h3>Email Marketing</h3>
+        <p>Journey Design, A/B Testing, Deliverability Optimization, Campaign Activation</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#128202;</div>
+        <h3>Data Management</h3>
+        <p>Data Extensions, Subscriber Lists, Contact Models, Import/Export Automation</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#128279;</div>
+        <h3>Integrations</h3>
+        <p>Salesforce-Pardot Connector, ZoomInfo, Gong, OpenPrise, Clari, Clay</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#128274;</div>
+        <h3>Security &amp; Access</h3>
+        <p>User Management, Roles, Permissions, Field-Level Security</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#128200;</div>
+        <h3>Analytics</h3>
+        <p>Campaign Performance Evaluation, Engagement Metrics, Funnel Insights</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#127979;</div>
+        <h3>Training &amp; Enablement</h3>
+        <p>Workshops, Playbooks, Objection-Handling Guides, Certification Modules</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">&#128736;</div>
+        <h3>Tools</h3>
+        <p>Salesforce CRM, Data Loader, Jira, Confluence, Lucidchart</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label">Where I've Worked</div>
+    <h2 class="section-title">Professional <span>Experience</span></h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="job-header">
+            <div>
+              <div class="job-title">Salesforce Administrator &mdash; Account Engagement</div>
+              <div class="job-company">Truist Bank</div>
+            </div>
+            <span class="job-date">May 2024 &ndash; Present</span>
+          </div>
+          <div class="job-location">&#128205; Charlotte, NC</div>
+          <ul class="job-bullets">
+            <li>Oversaw Account Engagement configuration including Engagement Studio, lead qualification logic, landing pages, forms, and automated handoff processes.</li>
+            <li>Structured user access, permissions, and security settings across Account Engagement and Salesforce CRM ensuring controlled data visibility.</li>
+            <li>Supported marketing teams through email campaign setup, journey activation, segmentation strategies, and automation planning.</li>
+            <li>Maintained segmentation lists, contact models, and subscriber datasets reinforcing data quality for campaign operations.</li>
+            <li>Enabled smooth CRM&ndash;Account Engagement synchronization, ensuring accurate lead mapping and consistent field alignment.</li>
+            <li>Directed automation routines for data imports, triggered communications, audience movement rules, and engagement scoring.</li>
+            <li>Analyzed campaign metrics, engagement data, and lifecycle movement to highlight insights for marketing and sales leaders.</li>
+            <li>Structured training materials, playbooks, and enablement content supporting marketing and sales teams across complex operational areas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="job-header">
+            <div>
+              <div class="job-title">Salesforce Administrator / CRM Analyst &mdash; Marketing Operations</div>
+              <div class="job-company">Accenture</div>
+            </div>
+            <span class="job-date">Jul 2020 &ndash; Aug 2023</span>
+          </div>
+          <div class="job-location">&#128205; Hyderabad, India</div>
+          <ul class="job-bullets">
+            <li>Supported enterprise clients with Salesforce CRM and Account Engagement optimization focusing on segmentation, journey mapping, and email campaign operations.</li>
+            <li>Managed subscriber datasets, contact modeling structures, dynamic lists, and data extensions supporting multi-channel marketing efforts.</li>
+            <li>Prepared automation strategies that governed triggered emails, lifecycle transitions, and marketing-to-sales alignment.</li>
+            <li>Strengthened CRM data hygiene using validation logic, list maintenance processes, integrity checks, and mapping controls.</li>
+            <li>Directed cross-system integration alignment involving ZoomInfo, Gong, Clari, and similar applications.</li>
+            <li>Developed intelligence dashboards and engagement reporting supporting analytics-driven campaign refinement.</li>
+            <li>Led training modules, objection-handling guides, and sales enablement material targeting consultative selling strategies.</li>
+            <li>Facilitated workshops and coaching sessions focused on value-based, complex selling scenarios in high-risk operational environments.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">&#127891;</div>
+        <div>
+          <div class="edu-deg">Master of Science &mdash; Information Technology &amp; Management</div>
+          <div class="edu-school">Webster University</div>
+          <div class="edu-loc">Missouri, USA</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">&#128296;</div>
+        <div>
+          <div class="edu-deg">Bachelor of Technology &mdash; Mechanical &amp; Automobile Engineering</div>
+          <div class="edu-school">Vel Tech University</div>
+          <div class="edu-loc">India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Certifications &amp; <span>Achievements</span></h2>
+    <div class="certs-grid">
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Salesforce Certified Marketing Cloud Account Engagement Specialist</div>
+      </div>
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Salesforce Certified Administrator</div>
+      </div>
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Salesforce Platform Developer I</div>
+      </div>
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Salesforce Certified AI Associate</div>
+      </div>
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Salesforce Certified Agentforce Specialist</div>
+      </div>
+      <div class="cert-chip">
+        <div class="cert-icon">&#127941;</div>
+        <div class="cert-name">Coursera &mdash; Managing Project Risk and Changes</div>
+      </div>
+    </div>
+    <div class="trailhead-bar">
+      <div class="th-icon">&#127863;</div>
+      <p>Salesforce Trailhead: <strong>228 Badges</strong> &nbsp;|&nbsp; <strong>6 Super Badges</strong> &nbsp;|&nbsp; <strong>Double Star Ranger</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Let's Connect</div>
+    <h2 class="section-title">Get in <span>Touch</span></h2>
+    <p style="color:#a8c4e0; margin-bottom:2rem; font-size:.95rem;">
+      Open to new opportunities in Salesforce administration, marketing operations, and RevOps.
+    </p>
+    <div class="contact-cards">
+      <a href="mailto:rekhamabhi85@gmail.com" class="contact-card">
+        <span class="cc-icon">&#9993;</span> rekhamabhi85@gmail.com
+      </a>
+      <a href="tel:+13144859793" class="contact-card">
+        <span class="cc-icon">&#128222;</span> +1 314-485-9793
+      </a>
+      <a href="https://www.linkedin.com/in/abhilashrekhem26" target="_blank" rel="noopener" class="contact-card">
+        <span class="cc-icon">&#128101;</span> LinkedIn Profile
+      </a>
+      <div class="contact-card">
+        <span class="cc-icon">&#128205;</span> Saint Louis, MO
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Abhi Rekham &mdash; Salesforce Administrator &amp; Marketing Cloud Specialist</p>
+</footer>
+
+</body>
+</html>
