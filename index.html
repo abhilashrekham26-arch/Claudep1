@@ -519,14 +519,15 @@
         <div class="cit glass"><div class="cico">📍</div><div><div class="clb">Location</div><div class="cv">Saint Louis, MO</div></div></div>
         <a href="resume.pdf" download class="cit glass"><div class="cico">📄</div><div><div class="clb">Resume</div><div class="cv">Download PDF</div></div></a>
       </div>
-      <form class="cf aos d2" action="mailto:rekhamabhi85@gmail.com" method="POST" enctype="text/plain">
+      <form id="contactForm" class="cf aos d2">
         <div class="fr">
-          <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" /></div>
-          <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@company.com" /></div>
+          <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
+          <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@company.com" required /></div>
         </div>
-        <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="Salesforce Admin role at..." /></div>
-        <div class="fg"><label>Message</label><textarea name="message" placeholder="Hi Abhi, I came across your profile..."></textarea></div>
-        <button type="submit" class="bsend">Send Message &rarr;</button>
+        <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="Salesforce Admin role at..." required /></div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Hi Abhi, I came across your profile..." required></textarea></div>
+        <button type="submit" class="bsend" id="sendBtn">Send Message &rarr;</button>
+        <div id="formMsg" style="margin-top:1rem;padding:.9rem 1.2rem;border-radius:8px;font-size:.9rem;font-weight:600;display:none;"></div>
       </form>
     </div>
   </div>
@@ -562,6 +563,35 @@
     nl.style.cssText = open ? 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(5,9,26,.97);backdrop-filter:blur(20px);padding:1.5rem 2rem;gap:1.4rem;border-bottom:1px solid rgba(255,255,255,.08);z-index:999;' : '';
   });
   document.querySelectorAll('#navlinks a').forEach(a => a.addEventListener('click', () => { nl.style.cssText = ''; nl.classList.remove('mob-open'); }));
+
+  const contactForm = document.getElementById('contactForm');
+  const sendBtn = document.getElementById('sendBtn');
+  const formMsg = document.getElementById('formMsg');
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+    const data = Object.fromEntries(new FormData(contactForm));
+    try {
+      const res = await fetch('https://formspree.io/f/REPLACE_WITH_YOUR_ID', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        formMsg.style.cssText = 'display:block;background:rgba(0,200,100,.12);border:1px solid rgba(0,200,100,.35);color:#4ade80;';
+        formMsg.textContent = "Thanks! I'll get back to you soon. 👋";
+        contactForm.reset();
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      formMsg.style.cssText = 'display:block;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#f87171;';
+      formMsg.textContent = 'Something went wrong. Please email me directly at rekhamabhi85@gmail.com';
+    }
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Send Message →';
+  });
 </script>
 </body>
 </html>
