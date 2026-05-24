@@ -3,507 +3,763 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abhi Rekham | Salesforce Administrator</title>
+  <meta name="description" content="Abhi Rekham — Salesforce Administrator & Account Engagement Specialist with 4+ years experience in CRM, marketing automation, and campaign management." />
+  <title>Abhi Rekham | Salesforce & Account Engagement Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --blue:    #0176d3;
-      --blue-dk: #014486;
-      --blue-lt: #e8f4fd;
-      --slate:   #1b2533;
-      --mid:     #444f5b;
-      --light:   #f4f6f9;
-      --white:   #ffffff;
-      --accent:  #00a1e0;
-      --gold:    #f4b942;
+      --bg:        #05091a;
+      --bg2:       #080e20;
+      --bg3:       #0d1428;
+      --card:      rgba(255,255,255,0.04);
+      --card-h:    rgba(255,255,255,0.08);
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(0,161,224,0.4);
+      --blue:      #00a1e0;
+      --blue-dk:   #0176d3;
+      --blue-lt:   rgba(0,161,224,0.12);
+      --cyan:      #06b6d4;
+      --purple:    #8b5cf6;
+      --gold:      #f59e0b;
+      --green:     #10b981;
+      --text:      #f1f5f9;
+      --text2:     #94a3b8;
+      --text3:     #64748b;
+      --fhead:     'Space Grotesk', system-ui, sans-serif;
+      --fbody:     'Inter', system-ui, sans-serif;
+      --r:         16px;
+      --rsm:       10px;
     }
 
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      color: var(--slate);
-      background: var(--white);
-      line-height: 1.65;
-    }
+    body { font-family: var(--fbody); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    ::selection { background: var(--blue); color: #fff; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-dk); border-radius: 3px; }
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--slate);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 68px; padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
+      border-bottom: 1px solid transparent;
+      transition: all .35s ease;
     }
-    .nav-logo { color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: .5px; }
-    .nav-logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    nav.scrolled {
+      background: rgba(5,9,26,.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--border);
+    }
+    .nav-logo { font-family: var(--fhead); font-size: 1.2rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a {
-      color: #c9d4e0; text-decoration: none; font-size: .875rem;
-      font-weight: 500; letter-spacing: .3px; transition: color .2s;
+      color: var(--text2); text-decoration: none; font-size: .875rem; font-weight: 500;
+      transition: color .2s; position: relative;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--blue); transform: scaleX(0); transition: transform .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--blue); color: #fff !important; padding: .45rem 1.2rem;
+      border-radius: 6px; font-weight: 600 !important; transition: all .2s;
+    }
+    .nav-cta:hover { background: var(--cyan) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text2); border-radius: 2px; transition: all .3s; }
 
     /* ── HERO ── */
     #hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--slate) 0%, var(--blue-dk) 60%, var(--blue) 100%);
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 80px 1.5rem 4rem;
+      min-height: 100vh; position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 100px 1.5rem 4rem; text-align: center;
     }
-    .hero-inner { max-width: 720px; }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,.12);
-      color: var(--accent);
-      border: 1px solid rgba(0,161,224,.4);
-      border-radius: 20px;
-      padding: .35rem 1rem;
-      font-size: .8rem; font-weight: 600; letter-spacing: .8px;
-      text-transform: uppercase; margin-bottom: 1.4rem;
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 15% 50%, rgba(0,161,224,.13) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(139,92,246,.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 55% 85%, rgba(6,182,212,.08) 0%, transparent 50%),
+        var(--bg);
     }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35; z-index: 0;
+      animation: floatOrb 10s ease-in-out infinite;
+    }
+    .orb-1 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(0,161,224,.35), transparent); top: -10%; left: -8%; animation-duration: 11s; }
+    .orb-2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(139,92,246,.28), transparent); top: 15%; right: -6%; animation-delay: -4s; animation-duration: 13s; }
+    .orb-3 { width: 320px; height: 320px; background: radial-gradient(circle, rgba(6,182,212,.22), transparent); bottom: -5%; left: 35%; animation-delay: -7s; animation-duration: 9s; }
+    @keyframes floatOrb {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(25px,-25px) scale(1.06); }
+      66% { transform: translate(-18px,12px) scale(.96); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 820px; }
+    .hero-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,161,224,.1); border: 1px solid rgba(0,161,224,.3);
+      color: var(--cyan); padding: .4rem 1rem; border-radius: 20px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .6px; text-transform: uppercase;
+      margin-bottom: 1.5rem; animation: fadeDown .6s ease both;
+    }
+    .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: chipPulse 1.6s ease infinite; }
+    @keyframes chipPulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.75); } }
+
     #hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
-      color: var(--white); font-weight: 800; line-height: 1.15;
-      margin-bottom: .6rem;
+      font-family: var(--fhead); font-size: clamp(2.8rem,7vw,5.2rem);
+      font-weight: 800; line-height: 1.08; margin-bottom: .9rem;
+      animation: fadeDown .6s ease .1s both;
     }
-    #hero h1 span { color: var(--accent); }
-    .hero-title {
-      color: #a8c4e0; font-size: 1.15rem; font-weight: 500;
-      margin-bottom: 1.4rem;
+    .name-grad {
+      background: linear-gradient(135deg, #fff 0%, var(--blue) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .hero-summary {
-      color: #c5d8ea; font-size: .975rem; max-width: 640px;
-      margin: 0 auto 2rem;
+    .typed-wrap {
+      height: 2.4rem; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.3rem; animation: fadeDown .6s ease .2s both;
     }
-    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      padding: .7rem 1.8rem; border-radius: 6px; font-size: .9rem;
-      font-weight: 600; text-decoration: none; transition: transform .15s, box-shadow .15s;
-      display: inline-block;
+    #typed { font-family: var(--fhead); font-size: clamp(1rem,2.6vw,1.35rem); font-weight: 600; color: var(--blue); }
+    .cursor {
+      display: inline-block; width: 2px; height: 1.15em; background: var(--blue);
+      margin-left: 2px; vertical-align: middle; animation: blink .8s step-end infinite;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
-    .btn-primary { background: var(--accent); color: var(--white); }
-    .btn-outline { border: 2px solid rgba(255,255,255,.5); color: var(--white); }
-    .hero-stats {
-      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
-      margin-top: 3rem; padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,.15);
-    }
-    .stat { text-align: center; }
-    .stat-num { font-size: 2rem; font-weight: 800; color: var(--gold); }
-    .stat-lbl { font-size: .75rem; color: #a8c4e0; text-transform: uppercase; letter-spacing: .6px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ── SECTIONS ── */
-    section { padding: 5rem 1.5rem; }
-    .section-inner { max-width: 960px; margin: 0 auto; }
-    .section-label {
-      font-size: .75rem; font-weight: 700; letter-spacing: 1.2px;
-      text-transform: uppercase; color: var(--blue); margin-bottom: .5rem;
+    .hero-tag {
+      color: var(--text2); font-size: clamp(.9rem,2vw,1.05rem);
+      max-width: 620px; margin: 0 auto 2.2rem; animation: fadeDown .6s ease .3s both;
     }
-    .section-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.1rem); font-weight: 800;
-      color: var(--slate); margin-bottom: 2.8rem;
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3.5rem; animation: fadeDown .6s ease .4s both;
     }
-    .section-title span { color: var(--blue); }
+    .btn-pri {
+      padding: .9rem 2.1rem; border-radius: 8px;
+      background: linear-gradient(135deg, var(--blue-dk), var(--blue));
+      color: #fff; text-decoration: none; font-weight: 700; font-size: .95rem;
+      box-shadow: 0 4px 22px rgba(0,161,224,.38); transition: all .25s;
+    }
+    .btn-pri:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,161,224,.5); }
+    .btn-sec {
+      padding: .9rem 2.1rem; border-radius: 8px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      color: var(--text); text-decoration: none; font-weight: 600; font-size: .95rem;
+      transition: all .25s; backdrop-filter: blur(10px);
+    }
+    .btn-sec:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); transform: translateY(-3px); }
 
-    /* ── SKILLS ── */
-    #skills { background: var(--light); }
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.4rem;
+    .hero-stats { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; animation: fadeUp .6s ease .5s both; }
+    .hstat {
+      background: rgba(255,255,255,.04); backdrop-filter: blur(10px);
+      border: 1px solid var(--border); border-radius: var(--rsm);
+      padding: 1rem 1.4rem; text-align: center; min-width: 105px; transition: all .3s;
     }
-    .skill-card {
-      background: var(--white); border-radius: 10px;
-      padding: 1.5rem 1.6rem;
-      border-left: 4px solid var(--blue);
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .skill-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
-    .skill-card-icon { font-size: 1.5rem; margin-bottom: .6rem; }
-    .skill-card h3 { font-size: .9rem; font-weight: 700; color: var(--blue-dk); margin-bottom: .5rem; }
-    .skill-card p { font-size: .85rem; color: var(--mid); }
+    .hstat:hover { border-color: rgba(0,161,224,.35); background: rgba(0,161,224,.06); transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,161,224,.15); }
+    .hstat-n { font-family: var(--fhead); font-size: 1.9rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .hstat-l { font-size: .68rem; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-top: .3rem; }
 
-    /* ── EXPERIENCE ── */
-    .timeline { position: relative; }
-    .timeline::before {
-      content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
-      width: 2px; background: var(--blue-lt);
+    .scroll-hint {
+      position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%);
+      z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      animation: fadeIn 1s ease 1.2s both;
     }
-    .timeline-item { position: relative; padding-left: 56px; margin-bottom: 2.6rem; }
-    .timeline-dot {
-      position: absolute; left: 8px; top: 4px;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--blue); border: 3px solid var(--white);
-      box-shadow: 0 0 0 2px var(--blue);
-    }
-    .timeline-card {
-      background: var(--white); border-radius: 10px;
-      padding: 1.6rem 1.8rem;
-      box-shadow: 0 2px 14px rgba(0,0,0,.07);
-      border-top: 3px solid var(--blue);
-    }
-    .job-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .4rem; margin-bottom: .8rem; }
-    .job-title { font-size: 1.05rem; font-weight: 700; color: var(--slate); }
-    .job-company { font-size: .9rem; font-weight: 600; color: var(--blue); }
-    .job-date {
-      background: var(--blue-lt); color: var(--blue-dk);
-      font-size: .75rem; font-weight: 600; padding: .25rem .75rem;
-      border-radius: 20px; white-space: nowrap; align-self: flex-start;
-    }
-    .job-location { font-size: .8rem; color: #888; margin-bottom: .9rem; }
-    .job-bullets { list-style: none; }
-    .job-bullets li {
-      font-size: .875rem; color: var(--mid); padding: .3rem 0 .3rem 1.2rem;
-      position: relative; border-bottom: 1px solid #f0f2f5;
-    }
-    .job-bullets li:last-child { border-bottom: none; }
-    .job-bullets li::before {
-      content: '▸'; position: absolute; left: 0; color: var(--blue); font-size: .75rem;
-    }
+    .scroll-hint span { font-size: .68rem; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+    .scroll-mouse { width: 22px; height: 34px; border: 2px solid var(--text3); border-radius: 12px; display: flex; justify-content: center; padding-top: 5px; }
+    .scroll-wheel { width: 3px; height: 6px; background: var(--text3); border-radius: 2px; animation: swh 1.6s ease infinite; }
+    @keyframes swh { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(8px);opacity:0} }
 
-    /* ── EDUCATION ── */
-    #education { background: var(--light); }
-    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; }
-    .edu-card {
-      background: var(--white); border-radius: 10px; padding: 1.6rem 1.8rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
-      display: flex; gap: 1rem; align-items: flex-start;
-    }
-    .edu-icon {
-      width: 48px; height: 48px; border-radius: 10px;
-      background: var(--blue-lt); display: flex; align-items: center;
-      justify-content: center; font-size: 1.4rem; flex-shrink: 0;
-    }
-    .edu-deg { font-size: .95rem; font-weight: 700; color: var(--slate); margin-bottom: .25rem; }
-    .edu-school { font-size: .85rem; color: var(--blue); font-weight: 600; }
-    .edu-loc { font-size: .8rem; color: #888; }
-
-    /* ── CERTIFICATIONS ── */
-    .certs-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.1rem;
-    }
-    .cert-chip {
-      background: var(--white); border-radius: 10px;
-      padding: 1.1rem 1.3rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,.06);
-      border-left: 4px solid var(--gold);
-      display: flex; gap: .7rem; align-items: flex-start;
-      transition: transform .2s;
-    }
-    .cert-chip:hover { transform: translateY(-2px); }
-    .cert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
-    .cert-name { font-size: .85rem; font-weight: 600; color: var(--slate); }
-
-    /* ── TRAILHEAD CALLOUT ── */
-    .trailhead-bar {
-      margin-top: 2rem;
-      background: linear-gradient(90deg, var(--blue-dk), var(--blue));
-      border-radius: 10px; padding: 1.4rem 2rem;
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-    }
-    .trailhead-bar .th-icon { font-size: 2rem; }
-    .trailhead-bar p { color: var(--white); font-size: .95rem; }
-    .trailhead-bar strong { color: var(--gold); }
-
-    /* ── CONTACT ── */
-    #contact { background: var(--slate); text-align: center; }
-    #contact .section-label { color: var(--accent); }
-    #contact .section-title { color: var(--white); }
-    #contact .section-title span { color: var(--accent); }
-    .contact-cards {
-      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .contact-card {
-      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-      border-radius: 10px; padding: 1.2rem 1.8rem; color: var(--white);
-      text-decoration: none; font-size: .9rem; font-weight: 500;
-      transition: background .2s, transform .15s;
+    /* ── SHARED SECTION STYLES ── */
+    section { padding: 6rem 1.5rem; }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+    .slabel {
+      font-size: .73rem; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--blue); margin-bottom: .55rem;
       display: flex; align-items: center; gap: .6rem;
     }
-    .contact-card:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
-    .contact-card .cc-icon { font-size: 1.2rem; }
+    .slabel::before { content:''; width: 20px; height: 2px; background: var(--blue); display: inline-block; }
+    .stitle { font-family: var(--fhead); font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 800; line-height: 1.15; margin-bottom: 1rem; }
+    .ssub { color: var(--text2); font-size: .975rem; max-width: 600px; margin-bottom: 3.5rem; line-height: 1.75; }
+
+    .glass {
+      background: var(--card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border); border-radius: var(--r); transition: all .3s ease;
+    }
+    .glass:hover { border-color: var(--border-h); background: var(--card-h); transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,161,224,.15); }
+
+    .aos { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .aos.visible { opacity: 1; transform: translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+    .d4{transition-delay:.4s} .d5{transition-delay:.5s} .d6{transition-delay:.6s}
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .about-text p { color: var(--text2); font-size: .975rem; line-height: 1.85; margin-bottom: 1.2rem; }
+    .about-text p strong { color: var(--text); }
+    .about-pills { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .5rem; }
+    .pill {
+      padding: .35rem .9rem; border-radius: 20px; font-size: .78rem; font-weight: 600;
+      background: rgba(0,161,224,.08); border: 1px solid rgba(0,161,224,.25); color: var(--blue);
+    }
+    .highlights { display: flex; flex-direction: column; gap: .9rem; }
+    .hl {
+      background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--blue);
+      border-radius: var(--rsm); padding: 1rem 1.2rem; transition: all .3s;
+    }
+    .hl:hover { border-left-color: var(--cyan); background: var(--card-h); transform: translateX(4px); }
+    .hl-t { font-size: .87rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .hl-d { font-size: .8rem; color: var(--text2); line-height: 1.6; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skill-cats { display: flex; flex-direction: column; gap: 2.4rem; }
+    .cat-title {
+      font-size: .77rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--blue); margin-bottom: .9rem; display: flex; align-items: center; gap: .7rem;
+    }
+    .cat-title::after { content:''; flex:1; height:1px; background: var(--border); }
+    .badges { display: flex; flex-wrap: wrap; gap: .65rem; }
+    .badge {
+      display: flex; align-items: center; gap: .45rem;
+      padding: .5rem 1rem; border-radius: 30px; font-size: .83rem; font-weight: 600;
+      border: 1px solid; cursor: default; transition: all .25s; user-select: none;
+    }
+    .badge:hover { transform: translateY(-3px) scale(1.05); }
+    .b-blue  { color:var(--blue);   border-color:rgba(0,161,224,.3);  background:rgba(0,161,224,.07); }
+    .b-blue:hover  { background:rgba(0,161,224,.16);  border-color:var(--blue); box-shadow:0 4px 16px rgba(0,161,224,.25); }
+    .b-cyan  { color:var(--cyan);   border-color:rgba(6,182,212,.3);  background:rgba(6,182,212,.07); }
+    .b-cyan:hover  { background:rgba(6,182,212,.16);  border-color:var(--cyan); box-shadow:0 4px 16px rgba(6,182,212,.25); }
+    .b-pur   { color:var(--purple); border-color:rgba(139,92,246,.3); background:rgba(139,92,246,.07); }
+    .b-pur:hover   { background:rgba(139,92,246,.16); border-color:var(--purple); box-shadow:0 4px 16px rgba(139,92,246,.25); }
+    .b-gold  { color:var(--gold);   border-color:rgba(245,158,11,.3); background:rgba(245,158,11,.07); }
+    .b-gold:hover  { background:rgba(245,158,11,.16); border-color:var(--gold); box-shadow:0 4px 16px rgba(245,158,11,.25); }
+    .b-green { color:var(--green);  border-color:rgba(16,185,129,.3); background:rgba(16,185,129,.07); }
+    .b-green:hover { background:rgba(16,185,129,.16); border-color:var(--green); box-shadow:0 4px 16px rgba(16,185,129,.25); }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg2); }
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before {
+      content:''; position:absolute; left:0; top:8px; bottom:0; width:2px;
+      background: linear-gradient(to bottom, var(--blue), rgba(0,161,224,.05));
+    }
+    .titem { position: relative; margin-bottom: 2.8rem; }
+    .titem:last-child { margin-bottom: 0; }
+    .tdot {
+      position: absolute; left: -2.6rem; top: 6px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--bg); border: 3px solid var(--blue);
+      box-shadow: 0 0 14px rgba(0,161,224,.55);
+    }
+    .tcard { padding: 1.8rem 2rem; }
+    .jhead { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: .8rem; margin-bottom: 1rem; }
+    .jtitle { font-family: var(--fhead); font-size: 1.08rem; font-weight: 700; color: var(--text); }
+    .jco { font-size: .9rem; font-weight: 600; color: var(--blue); margin-top: .2rem; }
+    .jloc { font-size: .78rem; color: var(--text3); margin-top: .15rem; }
+    .jbadge {
+      background: rgba(0,161,224,.1); color: var(--blue); border: 1px solid rgba(0,161,224,.25);
+      border-radius: 20px; padding: .3rem .9rem; font-size: .73rem; font-weight: 600; white-space: nowrap;
+    }
+    .jbullets { list-style: none; }
+    .jbullets li {
+      font-size: .87rem; color: var(--text2); padding: .32rem 0 .32rem 1.2rem;
+      position: relative; border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .jbullets li:last-child { border-bottom: none; }
+    .jbullets li::before { content:'▸'; position:absolute; left:0; color:var(--blue); font-size:.7rem; top:.44rem; }
+
+    /* ── INTERESTS ── */
+    #interests { background: var(--bg); }
+    .int-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 1.5rem; }
+    .int-card { padding: 2.2rem 1.6rem; text-align: center; }
+    .int-icon { font-size: 3rem; display: block; margin-bottom: 1rem; filter: drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+    .int-name { font-family: var(--fhead); font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .int-desc { font-size: .82rem; color: var(--text2); line-height: 1.65; }
+
+    /* ── WHY ME ── */
+    #recruiter { background: var(--bg2); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px,1fr)); gap: 1.3rem; }
+    .why-card { padding: 1.7rem 1.8rem; }
+    .wicon { font-size: 1.9rem; margin-bottom: .8rem; display: block; }
+    .wtitle { font-family: var(--fhead); font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+    .wdesc { font-size: .85rem; color: var(--text2); line-height: 1.72; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 3rem; }
+    .cinfo { display: flex; flex-direction: column; gap: 1rem; }
+    .citem {
+      display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.4rem;
+      text-decoration: none; color: var(--text); transition: all .3s;
+    }
+    .citem:hover { color: var(--blue); }
+    .cicon {
+      width: 44px; height: 44px; border-radius: 10px; background: rgba(0,161,224,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; flex-shrink: 0; transition: background .2s;
+    }
+    .citem:hover .cicon { background: rgba(0,161,224,.22); }
+    .clabel { font-size: .68rem; text-transform: uppercase; letter-spacing: .6px; color: var(--text3); margin-bottom: .1rem; }
+    .cval { font-size: .9rem; font-weight: 500; }
+
+    .cform { display: flex; flex-direction: column; gap: 1rem; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fg { display: flex; flex-direction: column; gap: .4rem; }
+    .fg label { font-size: .78rem; color: var(--text2); font-weight: 500; }
+    .fg input, .fg textarea {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem 1rem;
+      color: var(--text); font-family: var(--fbody); font-size: .9rem;
+      transition: border-color .2s; outline: none;
+    }
+    .fg input:focus, .fg textarea:focus { border-color: var(--blue); background: rgba(0,161,224,.05); }
+    .fg textarea { resize: vertical; min-height: 120px; }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--text3); }
+    .btn-send {
+      background: linear-gradient(135deg, var(--blue-dk), var(--blue));
+      color: #fff; border: none; padding: .9rem 2.2rem; border-radius: 8px;
+      font-size: .95rem; font-weight: 700; cursor: pointer; font-family: var(--fbody);
+      box-shadow: 0 4px 20px rgba(0,161,224,.32); transition: all .25s; align-self: flex-start;
+    }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,161,224,.48); }
 
     /* ── FOOTER ── */
     footer {
-      background: #0f1823; text-align: center;
-      padding: 1.4rem; color: #5a6a7a; font-size: .8rem;
+      background: var(--bg2); border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem; text-align: center;
     }
+    footer p { color: var(--text3); font-size: .83rem; }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(18px)}  to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      nav { padding: 0 1rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: .78rem; }
-      .timeline::before { left: 14px; }
-      .timeline-dot { left: 4px; }
-      .timeline-item { padding-left: 44px; }
+    @media(max-width:768px){
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .frow { grid-template-columns: 1fr; }
+      .hero-stats { gap: .7rem; }
+      .hstat { padding: .8rem 1rem; min-width: 85px; }
+    }
+    @media(max-width:480px){
+      section { padding: 4rem 1.2rem; }
+      .timeline { padding-left: 1.6rem; }
+      .tdot { left: -2rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Abhi <span>Rekham</span></div>
-  <ul class="nav-links">
+<!-- ── NAVIGATION ── -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Abhi <span>Rekham</span></a>
+  <ul class="nav-links" id="navlinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#certifications">Certs</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#recruiter">Why Me</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Connect</a></li>
   </ul>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">&#9679; Open to Opportunities</div>
-    <h1>Abhi <span>Rekham</span></h1>
-    <p class="hero-title">Salesforce Administrator &middot; Marketing Cloud Account Engagement Specialist</p>
-    <p class="hero-summary">
-      4+ years turning Salesforce into a growth engine &mdash; from Pardot automation and journey design
-      to CRM hygiene, integrations, and analytics-driven campaign strategy.
-    </p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn btn-primary">Get in Touch</a>
-      <a href="#experience" class="btn btn-outline">View Experience</a>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-chip"><span class="chip-dot"></span>Open to New Opportunities</div>
+
+    <h1><span class="name-grad">Abhi Rekham</span></h1>
+
+    <div class="typed-wrap">
+      <span id="typed"></span><span class="cursor"></span>
     </div>
+
+    <p class="hero-tag">
+      Turning Salesforce data into growth — through smart automation, clean CRM operations,
+      and campaigns that actually convert.
+    </p>
+
+    <div class="hero-btns">
+      <a href="resume.pdf" download class="btn-pri">&#11015; Download Resume</a>
+      <a href="https://www.linkedin.com/in/rekhamabhii/" target="_blank" rel="noopener" class="btn-sec">&#128101; Connect on LinkedIn</a>
+    </div>
+
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">4+</div><div class="stat-lbl">Years Experience</div></div>
-      <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Salesforce Certs</div></div>
-      <div class="stat"><div class="stat-num">228</div><div class="stat-lbl">Trailhead Badges</div></div>
-      <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Super Badges</div></div>
+      <div class="hstat"><div class="hstat-n">4+</div><div class="hstat-l">Years Exp</div></div>
+      <div class="hstat"><div class="hstat-n">5</div><div class="hstat-l">SF Certs</div></div>
+      <div class="hstat"><div class="hstat-n">228</div><div class="hstat-l">TH Badges</div></div>
+      <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Super Badges</div></div>
+      <div class="hstat"><div class="hstat-n">&#11088;&#11088;</div><div class="hstat-l">Star Ranger</div></div>
     </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span>Scroll</span>
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ── ABOUT ── -->
 <section id="about">
-  <div class="section-inner">
-    <div class="section-label">Who I Am</div>
-    <h2 class="section-title">Professional <span>Summary</span></h2>
-    <p style="font-size:1rem; color:var(--mid); max-width:780px; line-height:1.8;">
-      I'm a Salesforce Administrator specializing in <strong>Marketing Cloud Account Engagement (Pardot)</strong>,
-      with a strong track record at Truist Bank and Accenture. I bridge the gap between marketing, sales,
-      and RevOps &mdash; building structured automation, clean data pipelines, and insight-driven campaigns
-      that move the revenue needle. From Engagement Studio logic and landing page optimization to
-      cross-platform integrations with ZoomInfo, Gong, and Clari, I bring both technical depth and
-      stakeholder-facing communication skills to every engagement.
-    </p>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-inner">
-    <div class="section-label">What I Do</div>
-    <h2 class="section-title">Core Technical <span>Expertise</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-card-icon">&#9729;</div>
-        <h3>Salesforce Platforms</h3>
-        <p>Marketing Cloud Account Engagement (Pardot), Sales Cloud, Service Cloud</p>
+  <div class="wrap">
+    <div class="slabel">Who I Am</div>
+    <h2 class="stitle">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text aos">
+        <p>
+          I'm a <strong>Salesforce Administrator</strong> specializing in
+          <strong>Marketing Cloud Account Engagement (Pardot)</strong>, with 4+ years of experience
+          turning CRM platforms into revenue-driving machines. Currently at <strong>Truist Bank</strong>,
+          previously at <strong>Accenture</strong> supporting enterprise clients globally.
+        </p>
+        <p>
+          My work sits at the intersection of <strong>marketing automation</strong>,
+          <strong>CRM data quality</strong>, and <strong>campaign operations</strong> — building
+          Engagement Studio programs, managing segmentation logic, and ensuring clean data flows
+          between Salesforce and Account Engagement.
+        </p>
+        <p>
+          I thrive in cross-functional environments, collaborating with Sales, Marketing, and RevOps
+          to build processes that scale. I translate complex technical requirements into actionable
+          workflows that business stakeholders can understand and use.
+        </p>
+        <div class="about-pills">
+          <span class="pill">Saint Louis, MO</span>
+          <span class="pill">MS — IT &amp; Management</span>
+          <span class="pill">Double Star Ranger</span>
+          <span class="pill">Truist Bank</span>
+        </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#9881;</div>
-        <h3>Automation &amp; Marketing Ops</h3>
-        <p>Engagement Studio, Lead Routing, Segmentation Rules, Completion Actions, Dynamic Lists</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#9993;</div>
-        <h3>Email Marketing</h3>
-        <p>Journey Design, A/B Testing, Deliverability Optimization, Campaign Activation</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#128202;</div>
-        <h3>Data Management</h3>
-        <p>Data Extensions, Subscriber Lists, Contact Models, Import/Export Automation</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#128279;</div>
-        <h3>Integrations</h3>
-        <p>Salesforce-Pardot Connector, ZoomInfo, Gong, OpenPrise, Clari, Clay</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#128274;</div>
-        <h3>Security &amp; Access</h3>
-        <p>User Management, Roles, Permissions, Field-Level Security</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#128200;</div>
-        <h3>Analytics</h3>
-        <p>Campaign Performance Evaluation, Engagement Metrics, Funnel Insights</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#127979;</div>
-        <h3>Training &amp; Enablement</h3>
-        <p>Workshops, Playbooks, Objection-Handling Guides, Certification Modules</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">&#128736;</div>
-        <h3>Tools</h3>
-        <p>Salesforce CRM, Data Loader, Jira, Confluence, Lucidchart</p>
+      <div class="highlights aos d2">
+        <div class="hl"><div class="hl-t">&#127919; Salesforce Administration</div><div class="hl-d">User management, security, data models, workflow automation, and CRM configuration</div></div>
+        <div class="hl"><div class="hl-t">&#9889; Account Engagement / Pardot</div><div class="hl-d">Engagement Studio, landing pages, forms, lead scoring, and dynamic automation rules</div></div>
+        <div class="hl"><div class="hl-t">&#128202; Campaign Operations</div><div class="hl-d">End-to-end campaign management, A/B testing, journey design, and performance analytics</div></div>
+        <div class="hl"><div class="hl-t">&#128279; Integrations &amp; RevOps</div><div class="hl-d">ZoomInfo, Gong, Clari, Clay, OpenPrise — aligning tools across the revenue stack</div></div>
+        <div class="hl"><div class="hl-t">&#128200; Reporting &amp; Dashboards</div><div class="hl-d">Building insight dashboards that guide marketing and sales decision-making</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-inner">
-    <div class="section-label">Where I've Worked</div>
-    <h2 class="section-title">Professional <span>Experience</span></h2>
-    <div class="timeline">
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="wrap">
+    <div class="slabel">What I Know</div>
+    <h2 class="stitle">Technical Skills</h2>
+    <p class="ssub">A full-stack skill set spanning Salesforce platforms, marketing automation, analytics, and modern RevOps tooling.</p>
 
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="job-header">
+    <div class="skill-cats">
+      <div class="aos">
+        <div class="cat-title">&#9729;&#65039; Salesforce Platforms</div>
+        <div class="badges">
+          <span class="badge b-blue">&#9729; Salesforce CRM</span>
+          <span class="badge b-blue">&#128231; Account Engagement (Pardot)</span>
+          <span class="badge b-blue">&#128188; Sales Cloud</span>
+          <span class="badge b-blue">&#127911; Service Cloud</span>
+          <span class="badge b-blue">&#129302; Agentforce</span>
+          <span class="badge b-blue">&#8679; Data Loader</span>
+        </div>
+      </div>
+      <div class="aos d1">
+        <div class="cat-title">&#9889; Automation &amp; Marketing Ops</div>
+        <div class="badges">
+          <span class="badge b-cyan">&#128260; Engagement Studio</span>
+          <span class="badge b-cyan">&#128203; Segmentation Rules</span>
+          <span class="badge b-cyan">&#127919; Lead Routing &amp; Scoring</span>
+          <span class="badge b-cyan">&#9989; Completion Actions</span>
+          <span class="badge b-cyan">&#128229; Dynamic Lists</span>
+          <span class="badge b-cyan">&#128140; Journey Design</span>
+          <span class="badge b-cyan">&#129514; A/B Testing</span>
+          <span class="badge b-cyan">&#128386; Deliverability</span>
+        </div>
+      </div>
+      <div class="aos d2">
+        <div class="cat-title">&#128202; Analytics &amp; Data</div>
+        <div class="badges">
+          <span class="badge b-pur">&#128202; Power BI</span>
+          <span class="badge b-pur">&#128201; Tableau</span>
+          <span class="badge b-pur">&#128451; SQL</span>
+          <span class="badge b-pur">&#128200; Reporting Dashboards</span>
+          <span class="badge b-pur">&#128270; Funnel Analytics</span>
+          <span class="badge b-pur">&#128225; Engagement Metrics</span>
+        </div>
+      </div>
+      <div class="aos d3">
+        <div class="cat-title">&#128736;&#65039; Tools &amp; Integrations</div>
+        <div class="badges">
+          <span class="badge b-gold">&#128203; Jira</span>
+          <span class="badge b-gold">&#128218; Confluence</span>
+          <span class="badge b-gold">&#128671; Lucidchart</span>
+          <span class="badge b-gold">&#127912; Figma</span>
+          <span class="badge b-gold">&#128270; ZoomInfo</span>
+          <span class="badge b-gold">&#127908; Gong</span>
+          <span class="badge b-gold">&#128200; Clari</span>
+          <span class="badge b-gold">&#127807; Clay</span>
+          <span class="badge b-gold">&#9881; OpenPrise</span>
+        </div>
+      </div>
+      <div class="aos d4">
+        <div class="cat-title">&#129309; Soft Skills &amp; Enablement</div>
+        <div class="badges">
+          <span class="badge b-green">&#127979; Training &amp; Workshops</span>
+          <span class="badge b-green">&#128214; Playbook Development</span>
+          <span class="badge b-green">&#128172; Stakeholder Communication</span>
+          <span class="badge b-green">&#128274; Security &amp; Access Mgmt</span>
+          <span class="badge b-green">&#128205; Project Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="wrap">
+    <div class="slabel">Where I've Worked</div>
+    <h2 class="stitle">Professional Experience</h2>
+    <p class="ssub">4+ years delivering CRM and marketing automation solutions across banking and global consulting.</p>
+
+    <div class="timeline">
+      <div class="titem aos">
+        <div class="tdot"></div>
+        <div class="glass tcard">
+          <div class="jhead">
             <div>
-              <div class="job-title">Salesforce Administrator &mdash; Account Engagement</div>
-              <div class="job-company">Truist Bank</div>
+              <div class="jtitle">Salesforce Administrator — Account Engagement</div>
+              <div class="jco">Truist Bank</div>
+              <div class="jloc">&#128205; Charlotte, NC</div>
             </div>
-            <span class="job-date">May 2024 &ndash; Present</span>
+            <span class="jbadge">May 2024 – Present</span>
           </div>
-          <div class="job-location">&#128205; Charlotte, NC</div>
-          <ul class="job-bullets">
+          <ul class="jbullets">
             <li>Oversaw Account Engagement configuration including Engagement Studio, lead qualification logic, landing pages, forms, and automated handoff processes.</li>
             <li>Structured user access, permissions, and security settings across Account Engagement and Salesforce CRM ensuring controlled data visibility.</li>
             <li>Supported marketing teams through email campaign setup, journey activation, segmentation strategies, and automation planning.</li>
             <li>Maintained segmentation lists, contact models, and subscriber datasets reinforcing data quality for campaign operations.</li>
-            <li>Enabled smooth CRM&ndash;Account Engagement synchronization, ensuring accurate lead mapping and consistent field alignment.</li>
-            <li>Directed automation routines for data imports, triggered communications, audience movement rules, and engagement scoring.</li>
+            <li>Enabled smooth CRM–Account Engagement synchronization ensuring accurate lead mapping and consistent field alignment.</li>
             <li>Analyzed campaign metrics, engagement data, and lifecycle movement to highlight insights for marketing and sales leaders.</li>
             <li>Structured training materials, playbooks, and enablement content supporting marketing and sales teams across complex operational areas.</li>
           </ul>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="job-header">
+      <div class="titem aos d2">
+        <div class="tdot"></div>
+        <div class="glass tcard">
+          <div class="jhead">
             <div>
-              <div class="job-title">Salesforce Administrator / CRM Analyst &mdash; Marketing Operations</div>
-              <div class="job-company">Accenture</div>
+              <div class="jtitle">Salesforce Administrator / CRM Analyst — Marketing Operations</div>
+              <div class="jco">Accenture</div>
+              <div class="jloc">&#128205; Hyderabad, India</div>
             </div>
-            <span class="job-date">Jul 2020 &ndash; Aug 2023</span>
+            <span class="jbadge">Jul 2020 – Aug 2023</span>
           </div>
-          <div class="job-location">&#128205; Hyderabad, India</div>
-          <ul class="job-bullets">
-            <li>Supported enterprise clients with Salesforce CRM and Account Engagement optimization focusing on segmentation, journey mapping, and email campaign operations.</li>
+          <ul class="jbullets">
+            <li>Supported enterprise clients with Salesforce CRM and Account Engagement optimization focused on segmentation, journey mapping, and email campaign operations.</li>
             <li>Managed subscriber datasets, contact modeling structures, dynamic lists, and data extensions supporting multi-channel marketing efforts.</li>
-            <li>Prepared automation strategies that governed triggered emails, lifecycle transitions, and marketing-to-sales alignment.</li>
+            <li>Prepared automation strategies governing triggered emails, lifecycle transitions, and marketing-to-sales alignment.</li>
             <li>Strengthened CRM data hygiene using validation logic, list maintenance processes, integrity checks, and mapping controls.</li>
-            <li>Directed cross-system integration alignment involving ZoomInfo, Gong, Clari, and similar applications.</li>
+            <li>Directed cross-system integration alignment with ZoomInfo, Gong, Clari, and related MarTech applications.</li>
             <li>Developed intelligence dashboards and engagement reporting supporting analytics-driven campaign refinement.</li>
-            <li>Led training modules, objection-handling guides, and sales enablement material targeting consultative selling strategies.</li>
-            <li>Facilitated workshops and coaching sessions focused on value-based, complex selling scenarios in high-risk operational environments.</li>
+            <li>Led training modules, objection-handling guides, and sales enablement materials targeting consultative selling strategies.</li>
           </ul>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="section-inner">
-    <div class="section-label">Academic Background</div>
-    <h2 class="section-title">Education</h2>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <div class="edu-icon">&#127891;</div>
-        <div>
-          <div class="edu-deg">Master of Science &mdash; Information Technology &amp; Management</div>
-          <div class="edu-school">Webster University</div>
-          <div class="edu-loc">Missouri, USA</div>
-        </div>
+<!-- ── INTERESTS ── -->
+<section id="interests">
+  <div class="wrap">
+    <div class="slabel">Beyond the Screen</div>
+    <h2 class="stitle">Personal Interests</h2>
+    <p class="ssub">Great professionals are well-rounded humans first. Here's what drives me outside of work.</p>
+
+    <div class="int-grid">
+      <div class="int-card glass aos">
+        <span class="int-icon">&#9992;&#65039;</span>
+        <div class="int-name">Traveling</div>
+        <div class="int-desc">Exploring new cultures, cities, and cuisines. Every destination teaches me something new about the world — and about adaptability.</div>
       </div>
-      <div class="edu-card">
-        <div class="edu-icon">&#128296;</div>
-        <div>
-          <div class="edu-deg">Bachelor of Technology &mdash; Mechanical &amp; Automobile Engineering</div>
-          <div class="edu-school">Vel Tech University</div>
-          <div class="edu-loc">India</div>
-        </div>
+      <div class="int-card glass aos d1">
+        <span class="int-icon">&#11088;</span>
+        <div class="int-name">Reviewing Places</div>
+        <div class="int-desc">Sharing honest, thoughtful reviews of restaurants, spots, and experiences. I believe quality feedback makes communities better.</div>
+      </div>
+      <div class="int-card glass aos d2">
+        <span class="int-icon">&#128170;</span>
+        <div class="int-name">Gym &amp; Fitness</div>
+        <div class="int-desc">Consistent workouts keep me sharp and disciplined. The same structured focus I bring to the gym shows up in everything I do professionally.</div>
+      </div>
+      <div class="int-card glass aos d3">
+        <span class="int-icon">&#127955;</span>
+        <div class="int-name">Cricket</div>
+        <div class="int-desc">Cricket taught me teamwork, patience, and long-term strategy. Proud to have grown up with the sport in India — it shaped how I approach challenges.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="section-inner">
-    <div class="section-label">Credentials</div>
-    <h2 class="section-title">Certifications &amp; <span>Achievements</span></h2>
-    <div class="certs-grid">
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Salesforce Certified Marketing Cloud Account Engagement Specialist</div>
+<!-- ── WHY ME ── -->
+<section id="recruiter">
+  <div class="wrap">
+    <div class="slabel">Why Hire Me</div>
+    <h2 class="stitle">What I Bring to Your Team</h2>
+    <p class="ssub">Six reasons why Salesforce and marketing ops teams choose to work with me — and keep working with me.</p>
+
+    <div class="why-grid">
+      <div class="why-card glass aos">
+        <span class="wicon">&#129713;</span>
+        <div class="wtitle">Problem-Solving Mindset</div>
+        <div class="wdesc">I don't just fix issues — I trace them to root causes and build processes that prevent recurrence. Systematic thinking is my default mode.</div>
       </div>
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Salesforce Certified Administrator</div>
+      <div class="why-card glass aos d1">
+        <span class="wicon">&#128295;</span>
+        <div class="wtitle">Deep CRM Expertise</div>
+        <div class="wdesc">4+ years configuring, optimizing, and scaling Salesforce environments — from basic admin tasks to complex Account Engagement automation.</div>
       </div>
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Salesforce Platform Developer I</div>
+      <div class="why-card glass aos d2">
+        <span class="wicon">&#9889;</span>
+        <div class="wtitle">Automation-First Thinking</div>
+        <div class="wdesc">I look for every opportunity to eliminate manual work. If a team is doing something by hand that a workflow could do, I'll build that workflow.</div>
       </div>
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Salesforce Certified AI Associate</div>
+      <div class="why-card glass aos d3">
+        <span class="wicon">&#128172;</span>
+        <div class="wtitle">Clear Communication</div>
+        <div class="wdesc">I bridge technical and non-technical stakeholders — translating complex CRM logic into plain language that marketing leaders can act on.</div>
       </div>
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Salesforce Certified Agentforce Specialist</div>
+      <div class="why-card glass aos d4">
+        <span class="wicon">&#9878;&#65039;</span>
+        <div class="wtitle">Business + Technical Balance</div>
+        <div class="wdesc">I understand business goals first, then build the technical solution. That's what makes my implementations actually stick and scale.</div>
       </div>
-      <div class="cert-chip">
-        <div class="cert-icon">&#127941;</div>
-        <div class="cert-name">Coursera &mdash; Managing Project Risk and Changes</div>
+      <div class="why-card glass aos d5">
+        <span class="wicon">&#128200;</span>
+        <div class="wtitle">Data-Driven Decisions</div>
+        <div class="wdesc">Campaign performance, engagement metrics, funnel data — I use analytics to measure what's working and recommend exactly what to change.</div>
       </div>
-    </div>
-    <div class="trailhead-bar">
-      <div class="th-icon">&#127863;</div>
-      <p>Salesforce Trailhead: <strong>228 Badges</strong> &nbsp;|&nbsp; <strong>6 Super Badges</strong> &nbsp;|&nbsp; <strong>Double Star Ranger</strong></p>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ── CONTACT ── -->
 <section id="contact">
-  <div class="section-inner">
-    <div class="section-label">Let's Connect</div>
-    <h2 class="section-title">Get in <span>Touch</span></h2>
-    <p style="color:#a8c4e0; margin-bottom:2rem; font-size:.95rem;">
-      Open to new opportunities in Salesforce administration, marketing operations, and RevOps.
-    </p>
-    <div class="contact-cards">
-      <a href="mailto:rekhamabhi85@gmail.com" class="contact-card">
-        <span class="cc-icon">&#9993;</span> rekhamabhi85@gmail.com
-      </a>
-      <a href="tel:+13144859793" class="contact-card">
-        <span class="cc-icon">&#128222;</span> +1 314-485-9793
-      </a>
-      <a href="https://www.linkedin.com/in/rekhamabhii/" target="_blank" rel="noopener" class="contact-card">
-        <span class="cc-icon">&#128101;</span> LinkedIn Profile
-      </a>
-      <div class="contact-card">
-        <span class="cc-icon">&#128205;</span> Saint Louis, MO
+  <div class="wrap">
+    <div class="slabel">Get In Touch</div>
+    <h2 class="stitle">Let's Connect</h2>
+    <p class="ssub">Open to Salesforce admin and marketing automation opportunities. I'd love to hear from you.</p>
+
+    <div class="contact-grid">
+      <div class="cinfo aos">
+        <a href="mailto:rekhamabhi85@gmail.com" class="citem glass">
+          <div class="cicon">&#128231;</div>
+          <div><div class="clabel">Email</div><div class="cval">rekhamabhi85@gmail.com</div></div>
+        </a>
+        <a href="tel:+13144859793" class="citem glass">
+          <div class="cicon">&#128222;</div>
+          <div><div class="clabel">Phone</div><div class="cval">+1 314-485-9793</div></div>
+        </a>
+        <a href="https://www.linkedin.com/in/rekhamabhii/" target="_blank" rel="noopener" class="citem glass">
+          <div class="cicon">&#128101;</div>
+          <div><div class="clabel">LinkedIn</div><div class="cval">linkedin.com/in/rekhamabhii</div></div>
+        </a>
+        <div class="citem glass">
+          <div class="cicon">&#128205;</div>
+          <div><div class="clabel">Location</div><div class="cval">Saint Louis, MO</div></div>
+        </div>
+        <a href="resume.pdf" download class="citem glass">
+          <div class="cicon">&#128196;</div>
+          <div><div class="clabel">Resume</div><div class="cval">Download PDF</div></div>
+        </a>
       </div>
+
+      <form class="cform aos d2" action="mailto:rekhamabhi85@gmail.com" method="POST" enctype="text/plain">
+        <div class="frow">
+          <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" /></div>
+          <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@company.com" /></div>
+        </div>
+        <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="Salesforce Admin role at..." /></div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Hi Abhi, I came across your profile..."></textarea></div>
+        <button type="submit" class="btn-send">Send Message &#8594;</button>
+      </form>
     </div>
   </div>
 </section>
 
+<!-- ── FOOTER ── -->
 <footer>
-  <p>&copy; 2025 Abhi Rekham &mdash; Salesforce Administrator &amp; Marketing Cloud Specialist</p>
+  <p>
+    &copy; 2025 <strong>Abhi Rekham</strong> &mdash; Salesforce Administrator &amp; Account Engagement Specialist &nbsp;|&nbsp;
+    <a href="https://www.linkedin.com/in/rekhamabhii/" target="_blank">LinkedIn</a> &nbsp;|&nbsp;
+    <a href="mailto:rekhamabhi85@gmail.com">rekhamabhi85@gmail.com</a>
+  </p>
 </footer>
 
+<script>
+  // Typing animation
+  const words = ['Salesforce Administrator','Account Engagement Specialist','Marketing Automation Expert','CRM & RevOps Professional','Campaign Operations Lead'];
+  let wi = 0, ci = 0, del = false;
+  const el = document.getElementById('typed');
+  function type() {
+    const w = words[wi];
+    el.textContent = del ? w.slice(0, --ci) : w.slice(0, ++ci);
+    if (!del && ci === w.length) { del = true; setTimeout(type, 2400); return; }
+    if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; }
+    setTimeout(type, del ? 42 : 78);
+  }
+  type();
+
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+  document.querySelectorAll('.aos').forEach(e => obs.observe(e));
+
+  // Mobile hamburger
+  const ham = document.getElementById('ham');
+  const nl  = document.getElementById('navlinks');
+  ham.addEventListener('click', () => {
+    const open = nl.classList.toggle('mob-open');
+    nl.style.cssText = open
+      ? 'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(5,9,26,.97);backdrop-filter:blur(20px);padding:1.5rem 2rem;gap:1.4rem;border-bottom:1px solid rgba(255,255,255,.08);z-index:999;'
+      : '';
+  });
+  document.querySelectorAll('#navlinks a').forEach(a => a.addEventListener('click', () => { nl.style.cssText = ''; nl.classList.remove('mob-open'); }));
+</script>
 </body>
 </html>
